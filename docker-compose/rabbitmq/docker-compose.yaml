@@ -1,0 +1,19 @@
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - ${RABBITMQ_PORT}:5672
+      - ${RABBITMQ_MANAGE_PORT}:15672
+    volumes:
+      - ${RABBITMQ_DATA_PATH}:/var/lib/rabbitmq/
+      - ${RABBITMQ_LOG_PATH}:/var/log/rabbitmq
+    networks:
+      - backend
+    restart: always
