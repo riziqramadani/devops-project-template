@@ -11,7 +11,7 @@ services:
     ports:
       - ${MONGODB_PORT}:27017
     volumes:
-      - ${MONGODB_DATA_PATH}:/data/mongodb
+      - ${MONGODB_DATA_PATH}:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
