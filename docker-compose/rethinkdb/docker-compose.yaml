@@ -1,0 +1,25 @@
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+services:
+  rethinkdb:
+    image: rethinkdb:latest
+    container_name: rethinkdb
+    ports:
+     - 8080:8080
+     - ${RETHINKDB_PORT}:28015
+     - ${RETHINKDB_CLUSTER_PORT}:29015
+    command:
+      - /bin/bash
+      - -c
+      - |
+        rethinkdb create --initial-password ${RETHINKDB_PASSWORD}
+        rethinkdb --bind all
+    volumes:
+      - ${RETHINKDB_DATA_PATH}:/data
+    networks:
+      - backend
+    restart: always
