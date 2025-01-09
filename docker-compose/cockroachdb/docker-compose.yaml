@@ -1,0 +1,23 @@
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+services:
+  cockroachdb:
+    image: cockroachdb/cockroach:latest
+    container_name: cockroachdb
+    restart: always
+    environment:
+      - COCKROACH_DATABASE=${COCKROACH_DB}
+      - COCKROACH_USER=${COCKROACH_USERNAME}
+      - COCKROACH_PASSWORD=${COCKROACH_PASSWORD}
+    ports:
+      - ${COCKROACH_PORT}:26257
+      - 8080:8080
+    command: start-single-node --insecure
+    volumes:
+      - "${COCKROACH_DATA_PATH}:/cockroach/cockroach-data"
+    networks:
+      - backend
