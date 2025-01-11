@@ -1,0 +1,17 @@
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+services:
+  nexus:
+    image: sonatype/nexus3:latest
+    container_name: nexus
+    ports:
+      - ${NEXUS_PORT}:8081
+    volumes:
+      - ${NEXUS_DATA_PATH}:/nexus-data
+    networks:
+      - backend
+    restart: always
