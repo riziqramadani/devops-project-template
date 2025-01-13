@@ -1,0 +1,22 @@
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+services:
+  localstack:
+    container_name: localstack
+    image: localstack/localstack
+    ports:
+      - ${LOCALSTACK_GATEWAY_PORT}:4566 # LocalStack Gateway
+      - ${LOCALSTACK_PORT}:4510-4559    # external services port range
+    environment:
+      # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
+      - DEBUG=${DEBUG:-0}
+    volumes:
+      - ${LOCALSTACK_DATA_PATH}:/var/lib/localstack
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - backend
+    restart: always
